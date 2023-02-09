@@ -14,6 +14,10 @@ config/name="Meme Game Assets"
 run/main_scene="res://starting.tscn"
 config/icon="res://icon.png"
 
+[display]
+
+window/stretch/mode="2d"
+
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true
@@ -24,19 +28,19 @@ ui_accept={
 "deadzone": 0.5,
 "events": [  ]
 }
-ui_cancel={
-"deadzone": 0.5,
-"events": [  ]
-}
-ui_focus_prev={
-"deadzone": 0.5,
-"events": [  ]
-}
 ui_select={
 "deadzone": 0.5,
 "events": [  ]
 }
+ui_cancel={
+"deadzone": 0.5,
+"events": [  ]
+}
 ui_focus_next={
+"deadzone": 0.5,
+"events": [  ]
+}
+ui_focus_prev={
 "deadzone": 0.5,
 "events": [  ]
 }
