@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://bullet.tscn" type="PackedScene" id=1]
 [ext_resource path="res://f16.gd" type="Script" id=2]
@@ -8,6 +8,8 @@
 [ext_resource path="res://baloon.gd" type="Script" id=6]
 [ext_resource path="res://background.png" type="Texture" id=7]
 [ext_resource path="res://shot.wav" type="AudioStream" id=8]
+[ext_resource path="res://cloud1.png" type="Texture" id=9]
+[ext_resource path="res://cloud2.png" type="Texture" id=10]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 79.0
@@ -15,9 +17,16 @@ radius = 79.0
 [node name="starting" type="Node2D"]
 
 [node name="Background" type="Sprite" parent="."]
-position = Vector2( 544, 283 )
-scale = Vector2( 1.02935, 1.02935 )
+position = Vector2( 531, 331 )
 texture = ExtResource( 7 )
+
+[node name="Cloud1" type="Sprite" parent="."]
+position = Vector2( 277, 131 )
+texture = ExtResource( 9 )
+
+[node name="Cloud2" type="Sprite" parent="."]
+position = Vector2( 774, 341 )
+texture = ExtResource( 10 )
 
 [node name="f16" type="KinematicBody2D" parent="."]
 position = Vector2( 877, 281 )
