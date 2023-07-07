@@ -113,11 +113,11 @@ position = Vector2( 243, 242 )
 script = ExtResource( 6 )
 
 [node name="Balloon" type="Sprite" parent="baloon"]
-position = Vector2( 0, -7.48472 )
+position = Vector2( 0, -11.1784 )
 texture = ExtResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="baloon"]
-position = Vector2( 0, -18.859 )
+position = Vector2( 0, -22.7374 )
 shape = SubResource( 1 )
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="baloon"]
