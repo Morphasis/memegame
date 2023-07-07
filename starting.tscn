@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://bullet.tscn" type="PackedScene" id=1]
 [ext_resource path="res://f16.gd" type="Script" id=2]
@@ -8,8 +8,6 @@
 [ext_resource path="res://baloon.gd" type="Script" id=6]
 [ext_resource path="res://background.png" type="Texture" id=7]
 [ext_resource path="res://shot.wav" type="AudioStream" id=8]
-[ext_resource path="res://cloud1.png" type="Texture" id=9]
-[ext_resource path="res://cloud2.png" type="Texture" id=10]
 
 [sub_resource type="Gradient" id=2]
 colors = PoolColorArray( 0.0351563, 0.592957, 1, 1, 0.96875, 0.625543, 0.0340576, 1 )
@@ -36,19 +34,51 @@ color_ramp = SubResource( 3 )
 [sub_resource type="CircleShape2D" id=1]
 radius = 79.0
 
+[sub_resource type="Animation" id=7]
+resource_name = "idle"
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Balloon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1, 1.5, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, -20 ), Vector2( 0, 0 ), Vector2( 0, 20 ), Vector2( 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("CollisionShape2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5, 1, 1.5, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -11 ), Vector2( 0, -32 ), Vector2( 0, -11 ), Vector2( 0, 9 ), Vector2( 0, -11 ) ]
+}
+
+[sub_resource type="AnimationNodeAnimation" id=8]
+animation = "idle"
+
+[sub_resource type="AnimationNodeStateMachine" id=9]
+states/idle/node = SubResource( 8 )
+states/idle/position = Vector2( 138, 69 )
+start_node = "idle"
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=10]
+
 [node name="starting" type="Node2D"]
 
 [node name="Background" type="Sprite" parent="."]
-position = Vector2( 531, 331 )
+position = Vector2( 553, 301 )
+scale = Vector2( 0.313401, 0.326114 )
 texture = ExtResource( 7 )
-
-[node name="Cloud1" type="Sprite" parent="."]
-position = Vector2( 277, 131 )
-texture = ExtResource( 9 )
-
-[node name="Cloud2" type="Sprite" parent="."]
-position = Vector2( 774, 341 )
-texture = ExtResource( 10 )
 
 [node name="f16" type="KinematicBody2D" parent="."]
 position = Vector2( 877, 281 )
@@ -83,15 +113,25 @@ position = Vector2( 243, 242 )
 script = ExtResource( 6 )
 
 [node name="Balloon" type="Sprite" parent="baloon"]
+position = Vector2( 0, -7.48472 )
 texture = ExtResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="baloon"]
-position = Vector2( 0, -11 )
+position = Vector2( 0, -18.859 )
 shape = SubResource( 1 )
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="baloon"]
 stream = ExtResource( 5 )
 volume_db = 5.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="baloon"]
+anims/idle = SubResource( 7 )
+
+[node name="AnimationTree" type="AnimationTree" parent="baloon"]
+tree_root = SubResource( 9 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource( 10 )
 
 [node name="bullet" parent="." instance=ExtResource( 1 )]
 
