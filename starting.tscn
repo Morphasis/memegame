@@ -1,77 +1,9 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://bullet.tscn" type="PackedScene" id=1]
-[ext_resource path="res://f16.gd" type="Script" id=2]
-[ext_resource path="res://f16.png" type="Texture" id=3]
-[ext_resource path="res://balloon.png" type="Texture" id=4]
-[ext_resource path="res://pop.wav" type="AudioStream" id=5]
-[ext_resource path="res://baloon.gd" type="Script" id=6]
+[ext_resource path="res://UI_score.gd" type="Script" id=1]
+[ext_resource path="res://f16.tscn" type="PackedScene" id=2]
+[ext_resource path="res://baloon.tscn" type="PackedScene" id=3]
 [ext_resource path="res://background.png" type="Texture" id=7]
-[ext_resource path="res://shot.wav" type="AudioStream" id=8]
-
-[sub_resource type="Gradient" id=2]
-colors = PoolColorArray( 0.0351563, 0.592957, 1, 1, 0.96875, 0.625543, 0.0340576, 1 )
-
-[sub_resource type="GradientTexture" id=3]
-gradient = SubResource( 2 )
-
-[sub_resource type="Curve" id=4]
-max_value = 5.0
-_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 5 ), 0.0, 0.0, 0, 0 ]
-
-[sub_resource type="CurveTexture" id=5]
-curve = SubResource( 4 )
-
-[sub_resource type="ParticlesMaterial" id=6]
-flag_disable_z = true
-gravity = Vector3( 98, 0, 0 )
-orbit_velocity = 0.0
-orbit_velocity_random = 0.0
-scale = 1.8
-scale_curve = SubResource( 5 )
-color_ramp = SubResource( 3 )
-
-[sub_resource type="CircleShape2D" id=1]
-radius = 79.0
-
-[sub_resource type="Animation" id=7]
-resource_name = "idle"
-length = 2.0
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Balloon:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5, 1, 1.5, 2 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
-"update": 0,
-"values": [ Vector2( 0, 0 ), Vector2( 0, -20 ), Vector2( 0, 0 ), Vector2( 0, 20 ), Vector2( 0, 0 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("CollisionShape2D:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.5, 1, 1.5, 2 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
-"update": 0,
-"values": [ Vector2( 0, -11 ), Vector2( 0, -32 ), Vector2( 0, -11 ), Vector2( 0, 9 ), Vector2( 0, -11 ) ]
-}
-
-[sub_resource type="AnimationNodeAnimation" id=8]
-animation = "idle"
-
-[sub_resource type="AnimationNodeStateMachine" id=9]
-states/idle/node = SubResource( 8 )
-states/idle/position = Vector2( 138, 69 )
-start_node = "idle"
-
-[sub_resource type="AnimationNodeStateMachinePlayback" id=10]
 
 [node name="starting" type="Node2D"]
 
@@ -80,59 +12,33 @@ position = Vector2( 553, 301 )
 scale = Vector2( 0.313401, 0.326114 )
 texture = ExtResource( 7 )
 
-[node name="f16" type="KinematicBody2D" parent="."]
-position = Vector2( 877, 281 )
-script = ExtResource( 2 )
-Bullet = ExtResource( 1 )
+[node name="Control" type="Control" parent="Background"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -1920.0
+margin_top = -1080.0
+margin_right = -1920.0
+margin_bottom = -1080.0
+script = ExtResource( 1 )
 
-[node name="F16" type="Sprite" parent="f16"]
-texture = ExtResource( 3 )
+[node name="Label" type="Label" parent="Background/Control"]
+margin_left = 184.205
+margin_top = 187.674
+margin_right = 302.205
+margin_bottom = 201.674
+rect_scale = Vector2( 5.21186, 5.21186 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Social Credit Score"
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="f16"]
-polygon = PoolVector2Array( -95, 25, -66, 8, -48, 2, -38, -4, -31, -16, -19, -25, -4, -29, 16, -20, 26, -13, 37, -22, 68, -52, 78, -52, 60, -1, 88, 18, 87, 24, 68, 33, 42, 30, 31, 30, 19, 82, -17, 28, -46, 30, -59, 37, -87, 34 )
+[node name="Score" type="Label" parent="Background/Control"]
+margin_left = 184.205
+margin_top = 267.401
+margin_right = 302.205
+margin_bottom = 281.401
+rect_scale = Vector2( 5.21186, 5.21186 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "0"
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="f16"]
-stream = ExtResource( 8 )
+[node name="f16" parent="." instance=ExtResource( 2 )]
 
-[node name="Particles2D" type="Particles2D" parent="f16"]
-position = Vector2( 88, 21 )
-process_material = SubResource( 6 )
-
-[node name="Particles2D2" type="Particles2D" parent="f16"]
-position = Vector2( 88, 19 )
-rotation = -0.264315
-process_material = SubResource( 6 )
-
-[node name="Particles2D3" type="Particles2D" parent="f16"]
-position = Vector2( 88, 23 )
-rotation = 0.270968
-process_material = SubResource( 6 )
-
-[node name="baloon" type="KinematicBody2D" parent="."]
-position = Vector2( 243, 242 )
-script = ExtResource( 6 )
-
-[node name="Balloon" type="Sprite" parent="baloon"]
-position = Vector2( 0, -11.1784 )
-texture = ExtResource( 4 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="baloon"]
-position = Vector2( 0, -22.7374 )
-shape = SubResource( 1 )
-
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="baloon"]
-stream = ExtResource( 5 )
-volume_db = 5.0
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="baloon"]
-anims/idle = SubResource( 7 )
-
-[node name="AnimationTree" type="AnimationTree" parent="baloon"]
-tree_root = SubResource( 9 )
-anim_player = NodePath("../AnimationPlayer")
-active = true
-parameters/playback = SubResource( 10 )
-
-[node name="bullet" parent="." instance=ExtResource( 1 )]
-
-[connection signal="finished" from="baloon/AudioStreamPlayer2D" to="baloon" method="_on_AudioStreamPlayer2D_finished"]
+[node name="baloon" parent="." instance=ExtResource( 3 )]

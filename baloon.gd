@@ -7,4 +7,5 @@ func pop():
 
 
 func _on_AudioStreamPlayer2D_finished():
+	Global.game_data.points -= 100
 	queue_free()
